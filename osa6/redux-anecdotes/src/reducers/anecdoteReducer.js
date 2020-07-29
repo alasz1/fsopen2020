@@ -36,6 +36,9 @@ const reducer = (state = initialState, action) => {
       return state.map(anecdote =>
         anecdote.id !== id ? anecdote : votedAnecdote  // map the new array: where id is not the selected id: use old object data, otherwise: use updated data (=votedAnecdote)
       )
+    case 'NEW_ANECDOTE':
+        console.log(state)
+        return [...state, action.data]
     default: return state
   }
 }
