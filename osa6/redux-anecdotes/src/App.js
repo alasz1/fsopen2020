@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 const App = () => {
   const anecdotes = useSelector(state => state)
+  // const orderedAnecdotes= anecdotes.sort((a, b) => (a.votes > b.votes) ? -1 : 0)
   const dispatch = useDispatch()
 
   const getId = () => (100000 * Math.random()).toFixed(0)
@@ -28,10 +29,11 @@ const App = () => {
         votes: 0
       }
     })
-      
+
   }
 
-console.log("anecdotes: ", anecdotes)
+  console.log("anecdotes: ", anecdotes)
+  // console.log("odered anecdotes: ", orderedAnecdotes)
   return (
     <div>
       <h2>Anecdotes</h2>
@@ -40,9 +42,9 @@ console.log("anecdotes: ", anecdotes)
           <div>
             {anecdote.content}
           </div>
-          <div> 
+          <div>
             has {anecdote.votes} vote{anecdote.votes === 1 ? "" : "s"}{' '}
-      <button onClick={() => vote(anecdote.id)}>vote</button>
+            <button onClick={() => vote(anecdote.id)}>vote</button>
           </div>
         </div>
       )}
