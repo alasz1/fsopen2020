@@ -63,6 +63,8 @@ const anecdoteReducer = (state = initialState, action) => {
             return -1
           return 0
         })
+        // .filter(c => c.content.toLowerCase().includes("if"))  // filter results here using filter data (should this be in anecdotelist???)
+
     case 'NEW_ANECDOTE':
       console.log(state)
       return [...state, action.data]

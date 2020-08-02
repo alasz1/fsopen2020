@@ -1,4 +1,5 @@
 import React from 'react';
+import Filter from './Filter'
 import { useSelector, useDispatch } from 'react-redux'
 import { newVote } from '../reducers/anecdoteReducer'
 import { showNotification, hideNotification } from '../reducers/notificationReducer'
@@ -9,7 +10,9 @@ const AnecdoteList = (props) => {
     const dispatch = useDispatch()
 
     const anecdotes = useSelector(state => state.anecdotes)
-    console.log("anecdotes: ", anecdotes)
+    const filter = useSelector(state => state.filter.data)
+    
+    console.log("anecdotes: ", anecdotes, "filter: ", filter)
 
     const vote = (id, message, anecdote) => {
         console.log('vote id, msg, anecdote', id, message, anecdote)
@@ -20,11 +23,17 @@ const AnecdoteList = (props) => {
         }, 5000)
     }
     console.log("STATE: ", store.getState())
+    console.log("filter ", filter)
 
+    
     return (
         <div>
             <h2>Anecdotes</h2>
-            {anecdotes.map(anecdote =>
+            <Filter />
+
+            {(filter.filter === "" ? anecdotes : anecdotes.filter(a => a.content.toLowerCase().includes(filter)))
+            .map(anecdote =>
+             
                 <div key={anecdote.id}>
                     <div>
                         {anecdote.content}
@@ -35,7 +44,8 @@ const AnecdoteList = (props) => {
                     </div>
 
                 </div>
-            )}
+            ) 
+            }
 
         </div>
     );
