@@ -12,9 +12,10 @@ const App = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    anecdoteService.getAll().then(anecdotes =>
-      dispatch(initializeAnecdotes(anecdotes)))
+  // everything regarding initialization happens now in anecdotereducer: fetching data from dbservice and sending it for the reducer
+  // async function can be used in action creator (=initializeAnecdotes) as redux-thunk middleware is applied in store
+  useEffect(() => { 
+      dispatch(initializeAnecdotes())
   }, [dispatch])
 
   return (

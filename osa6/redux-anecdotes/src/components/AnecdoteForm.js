@@ -13,8 +13,8 @@ const AnecdoteForm = (props) => {
         const content = event.target.newAnecdote.value
         const message = "You added a new anecdote: "
         event.target.newAnecdote.value = ""
-        const newAnecdoteToDispatch = await anecdoteService.createNew(content)
-        dispatch(newAnecdote(newAnecdoteToDispatch))
+        // const newAnecdoteToDispatch = await anecdoteService.createNew(content)
+        dispatch(newAnecdote(content))  // adding new anecdote can be processed by async action creator as redux-thunk is used 
         dispatch(showNotification(message, content))   // show notification for 5 seconds
         setTimeout(() => {
             dispatch(hideNotification())
