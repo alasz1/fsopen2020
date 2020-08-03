@@ -4,6 +4,11 @@ import notificationReducer from '../reducers/notificationReducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import filterReducer from '../reducers/filterReducer'
 
+
+// import { useDispatch } from 'react-redux'
+
+// const dispatch = useDispatch()
+
 const reducer = combineReducers({
     anecdotes: anecdoteReducer,
     notifications: notificationReducer,
@@ -14,5 +19,7 @@ const store = createStore(
     reducer,
     composeWithDevTools()
 )
+
+
 
 export default store;

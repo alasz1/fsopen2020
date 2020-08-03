@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { newVote } from '../reducers/anecdoteReducer'
 import { showNotification, hideNotification } from '../reducers/notificationReducer'
 import store from './Store'
+import anecdoteService from '../services/anecdotes'
 
 const AnecdoteList = (props) => {
 
@@ -14,9 +15,18 @@ const AnecdoteList = (props) => {
     
     console.log("anecdotes: ", anecdotes, "filter: ", filter)
 
-    const vote = (id, message, anecdote) => {
-        console.log('vote id, msg, anecdote', id, message, anecdote)
-        dispatch(newVote(id))
+    const vote = async (id, message, anecdote, votes) => {
+        console.log('vote id, msg, anecdote, votes', id, message, anecdote, votes)
+
+        dispatch(newVote(id)) // dispatch to reducer (doesn't go to db at the moment)
+
+        // Below: updating votes in db. should basically work (still need to set votes +1 in service), but how to sync this with reducer..?
+
+        // const content = {anecdote, id, votes}
+        // console.log("content in anecdotelist: ", content)
+        // const newVoteToDispatch = await anecdoteService.updateVotes(content)
+        // dispatch(newVote(newVoteToDispatch))
+
         dispatch(showNotification(message, anecdote))   // show notification for 5 seconds
         setTimeout(() => {
             dispatch(hideNotification())
@@ -40,7 +50,7 @@ const AnecdoteList = (props) => {
                     </div>
                     <div>
                         has {anecdote.votes} vote{anecdote.votes === 1 ? "" : "s"}{' '}
-                        <button onClick={() => vote(anecdote.id, "You voted for: ", anecdote.content)}>vote</button>
+                        <button onClick={() => vote(anecdote.id, "You voted for: ", anecdote.content, anecdote.votes)}>vote</button>
                     </div>
 
                 </div>

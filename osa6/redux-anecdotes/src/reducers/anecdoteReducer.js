@@ -26,18 +26,21 @@ export const newVote = (id) => {
   }
 }
 
-export const newAnecdote = (content) => {
+export const newAnecdote = (data) => {
   return {
     type: 'NEW_ANECDOTE',
-    data: {
-      content,
-      id: getId(),
-      votes: 0
-    }
+    data
   }
 }
 
-const anecdoteReducer = (state = initialState, action) => {
+export const initializeAnecdotes = (anecdotes) => {
+  return {
+    type: 'INIT_ANECDOTES',
+    data: anecdotes
+  }
+}
+
+const anecdoteReducer = (state = [], action) => {
   console.log('state now: ', state)
   console.log('action', action)
   switch (action.type) {
@@ -68,6 +71,8 @@ const anecdoteReducer = (state = initialState, action) => {
     case 'NEW_ANECDOTE':
       console.log(state)
       return [...state, action.data]
+    case 'INIT_ANECDOTES':
+      return action.data
     default: return state
   }
 }
