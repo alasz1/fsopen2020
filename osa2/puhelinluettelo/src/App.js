@@ -13,7 +13,16 @@ const App = () => {
       name: newName
     }
 
-    setPersons(persons.concat(nameObject))
+    //Check if name already exists
+    const found = persons.find(element => element.name === nameObject.name)
+    console.log(found)
+
+    if (!found) {
+      setPersons(persons.concat(nameObject))
+    } else {
+      alert(`${newName} is already added to phonebook!`)
+    }
+
     setNewName('')
   }
 
@@ -41,7 +50,6 @@ const App = () => {
             </li>
           )}
         </ul>
-      <div>debug: {newName}</div>
     </div>
   )
 
