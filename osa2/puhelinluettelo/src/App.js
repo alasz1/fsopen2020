@@ -6,6 +6,7 @@ const App = () => {
   ]) 
   const [ newName, setNewName ] = useState('name')
   const [ newNumber, setNewNumber ] = useState('number')
+  const [ filter, setFilter ] = useState('')
 
   const addName = (event) => {
     event.preventDefault()
@@ -43,9 +44,16 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const handleFilterChange = (event) => {
+    console.log(event.target.value)
+    setFilter(event.target.value)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
+        filter shown with <input onChange={handleFilterChange} />
+      <h2>Add new</h2>
       <form onSubmit={addName}>
         <div>
           name: <input value={newName} onChange={handleNameChange}/>
@@ -59,7 +67,8 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
         <ul>
-          {persons.map(person => 
+          {persons.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))
+          .map(person => 
             <li key={person.name}>
               {person.name} {person.number}
             </li>
