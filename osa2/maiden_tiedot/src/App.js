@@ -4,6 +4,7 @@ import axios from 'axios'
 const App = () => {
 
   const [countries, setCountries] = useState([])
+  // const [filtered, setFiltered] = useState([])
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
@@ -24,6 +25,7 @@ const App = () => {
   console.log(filtered)
 
   const flagStyle = { width: '400px' }
+  const listStyle = { display: 'inline' }
 
   return (
     <div>
@@ -37,9 +39,12 @@ const App = () => {
               (countries.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))
                 // .slice(0, 10)
                 .map(b =>
-                  <li key={b.name}>
-                    {b.name}
-                  </li>
+                  <div>
+                    <li style={listStyle} key={b.name}>
+                      {b.name} <div style={listStyle}>&nbsp;</div>
+                    </li>
+                    <button onClick={() => setFilter(b.name)}>Show</button>
+                  </div>
                 )
               )
               :
@@ -52,7 +57,6 @@ const App = () => {
                     <p>population: {countries.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))[0].population}</p>
                     <h2>Languages</h2>
                     {(countries.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))[0].languages)
-
                       .map(l =>
                         <li key={l.name}>
                           {l.name}
