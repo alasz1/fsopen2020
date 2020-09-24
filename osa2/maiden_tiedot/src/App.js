@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import GetWeather from './components/GetWeather'
 
 const App = () => {
 
   const [countries, setCountries] = useState([])
-  // const [filtered, setFiltered] = useState([])
+  const [weather, setWeather] = useState([])
   const [filter, setFilter] = useState('')
+
+  const api_key = process.env.REACT_APP_API_KEY
+
+  const filtered = countries.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))
+  console.log("filtered ", filtered.length)
 
   useEffect(() => {
     axios
       .get('https://restcountries.eu/rest/v2/all')
       .then(response => {
         setCountries(response.data)
-        console.log(response.data)
+        console.log("response.data: ", response.data)
       })
   }, [])
 
@@ -21,10 +27,7 @@ const App = () => {
     setFilter(event.target.value)
   }
 
-  const filtered = countries.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))
-  console.log(filtered)
-
-  const flagStyle = { width: '400px' }
+  const flagStyle = { width: '300px' }
   const listStyle = { display: 'inline' }
 
   return (
@@ -64,6 +67,8 @@ const App = () => {
                       )}
                     <br />
                     <img src={countries.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))[0].flag} alt="flag" style={flagStyle} />
+                    <h2>Weather in {countries.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))[0].capital}</h2>
+                    <GetWeather capital={countries.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))[0].capital} setWeather={setWeather} weather={weather} api_key={api_key}/>
                   </div>
                   )
                   :
