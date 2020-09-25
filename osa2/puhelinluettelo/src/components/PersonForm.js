@@ -23,6 +23,7 @@ const PersonForm = (props) => {
       PersonService
         .create(nameObject)
         .then(response => {
+          console.log("create person response: ", response)
           props.setPersons(props.persons.concat(response))
         })
     } else if (!foundNumber) {
