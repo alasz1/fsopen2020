@@ -1,5 +1,6 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React from 'react';
+import PersonService from '../services/PersonService'
 
 const PersonForm = (props) => {
 
@@ -19,10 +20,10 @@ const PersonForm = (props) => {
 
     if (!foundName && !foundNumber) {
       // send new entry to server & update view with response
-      axios
-        .post('http://localhost:3001/persons', nameObject)
+      PersonService
+        .create(nameObject)
         .then(response => {
-          props.setPersons(props.persons.concat(response.data))
+          props.setPersons(props.persons.concat(response))
         })
     } else if (!foundNumber) {
       alert(`${props.newName} is already added to phonebook!`)
