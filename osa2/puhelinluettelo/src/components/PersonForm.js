@@ -27,7 +27,17 @@ const PersonForm = (props) => {
           props.setPersons(props.persons.concat(response))
         })
     } else if (!foundNumber) {
-      alert(`${props.newName} is already added to phonebook!`)
+      // alert(`${props.newName} is already added to phonebook!`)
+
+      if (window.confirm(`${props.newName} is already added to phonebook. Replace the old number with a new one?`)) {
+        PersonService
+          .update(foundName.id, nameObject)
+          .then((response) => {
+            console.log("update person response: ", response)
+            props.setPersons(props.persons.filter(b => b.id !== foundName.id).concat(response))
+          })
+      }
+
     } else {
       alert(`${props.newNumber} is already added to phonebook!`)
     }
