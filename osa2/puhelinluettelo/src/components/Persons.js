@@ -21,6 +21,10 @@ const Persons = (props) => {
                                         .remove(person.id)
                                         .then(() => {
                                             props.setPersons(props.persons.filter(b => b.id !== person.id))
+                                            props.setMessage(`${person.name} deleted from phonebook.`)
+                                            setTimeout(() => {
+                                                props.setMessage(null)
+                                            }, 3000)
                                         })
                                 }
                             }

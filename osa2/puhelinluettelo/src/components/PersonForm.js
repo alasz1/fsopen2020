@@ -25,6 +25,10 @@ const PersonForm = (props) => {
         .then(response => {
           console.log("create person response: ", response)
           props.setPersons(props.persons.concat(response))
+          props.setMessage(`${nameObject.name} added to phonebook.`)
+          setTimeout(() => {
+            props.setMessage(null)
+          }, 3000)
         })
     } else if (!foundNumber) {
       // alert(`${props.newName} is already added to phonebook!`)
@@ -35,6 +39,10 @@ const PersonForm = (props) => {
           .then((response) => {
             console.log("update person response: ", response)
             props.setPersons(props.persons.filter(b => b.id !== foundName.id).concat(response))
+            props.setMessage(`${nameObject.name}'s number updated.`)
+          setTimeout(() => {
+            props.setMessage(null)
+          }, 3000)
           })
       }
 
