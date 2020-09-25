@@ -44,6 +44,12 @@ const PersonForm = (props) => {
             props.setMessage(null)
           }, 3000)
           })
+          .catch(error => {
+            props.setErrMessage(`${nameObject.name}'s information has already been removed from server.`)
+            setTimeout(() => {
+              props.setErrMessage(null)
+            }, 3000)
+          })
       }
 
     } else {
