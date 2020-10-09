@@ -20,6 +20,9 @@ const App = () => {
       .then(initialData => {
         setPersons(initialData)
       })
+      // .catch(error => {
+      //   console.log(error)
+      // })
   }, [])
 
   return (

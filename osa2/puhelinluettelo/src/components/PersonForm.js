@@ -23,13 +23,22 @@ const PersonForm = (props) => {
       PersonService
         .create(nameObject)
         .then(response => {
-          console.log("create person response: ", response)
-          props.setPersons(props.persons.concat(response))
-          props.setMessage(`${nameObject.name} added to phonebook.`)
-          setTimeout(() => {
-            props.setMessage(null)
-          }, 3000)
+          if (!response.error) {
+            console.log("create person response: ", response)
+            props.setPersons(props.persons.concat(response))
+            props.setMessage(`${nameObject.name} added to phonebook.`)
+            setTimeout(() => {
+              props.setMessage(null)
+            }, 3000)
+          } else {
+            // Show validation error from server
+            props.setErrMessage(`${response.error}'`)
+            setTimeout(() => {
+              props.setErrMessage(null)
+            }, 5000)
+          }
         })
+
     } else if (!foundNumber) {
       // alert(`${props.newName} is already added to phonebook!`)
 
@@ -40,9 +49,9 @@ const PersonForm = (props) => {
             console.log("update person response: ", response)
             props.setPersons(props.persons.filter(b => b.id !== foundName.id).concat(response))
             props.setMessage(`${nameObject.name}'s number updated.`)
-          setTimeout(() => {
-            props.setMessage(null)
-          }, 3000)
+            setTimeout(() => {
+              props.setMessage(null)
+            }, 3000)
           })
           .catch(error => {
             props.setErrMessage(`${nameObject.name}'s information has already been removed from server.`)
