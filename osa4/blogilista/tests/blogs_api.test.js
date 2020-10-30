@@ -18,33 +18,39 @@ const initialBlogs = [
     },
 ]
 beforeEach(async () => {
-  await Blog.deleteMany({})
-  let blogObject = new Blog(initialBlogs[0])
-  await blogObject.save()
-  blogObject = new Blog(initialBlogs[1])
-  await blogObject.save()
+    await Blog.deleteMany({})
+    let blogObject = new Blog(initialBlogs[0])
+    await blogObject.save()
+    blogObject = new Blog(initialBlogs[1])
+    await blogObject.save()
 })
 
 
 test('blogs are returned as json', async () => {
-  await api
-    .get('/api/blogs')
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
+    await api
+        .get('/api/blogs')
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
 })
 
 test('there are two blogs', async () => {
     const response = await api.get('/api/blogs')
-  
+
     expect(response.body).toHaveLength(2)
-  })
-  
-  test('the first blog is called title1', async () => {
+})
+
+test('the first blog is called title1', async () => {
     const response = await api.get('/api/blogs')
-  
+
     expect(response.body[0].title).toBe('title1')
-  })
+})
+
+test('the blogs are identified by a field called id', async () => {
+    const response = await api.get('/api/blogs')
+
+    expect(response.body[0].id).toBeDefined();
+})
 
 afterAll(() => {
-  mongoose.connection.close()
+    mongoose.connection.close()
 })
