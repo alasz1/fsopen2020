@@ -33,7 +33,7 @@ describe('total likes', () => {
     })
 
     test('returns blog with most likes', () => {
-        const result = listHelper.mostLikes(listWithManyBlogs)
+        const result = listHelper.mostLikedBlog(listWithManyBlogs)
         expect(result).toEqual(
             {
                 title: "Canonical string reduction",
@@ -49,6 +49,16 @@ describe('total likes', () => {
             {
                 author: "Robert C. Martin",
                 blogs: 3
+            }
+        )
+    })
+
+    test.only('returns author with most likes', () => {
+        const result = listHelper.mostLikes(listWithManyBlogs)
+        expect(result).toEqual(
+            {
+                author: "Edsger W. Dijkstra",
+                likes: 17
             }
         )
     })
