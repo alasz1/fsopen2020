@@ -97,6 +97,21 @@ test('if no value is given to likes field it is set to 0', async () => {
     expect(likes[blogIndex]).toEqual(0)
 })
 
+test('if no value is given to title and url fields, returns 400 bad request', async () => {
+    const newBlog = {
+        title: "",
+        author: "author3",
+        url: "",
+        likes: "66"
+    }
+  
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
