@@ -75,6 +75,28 @@ test('a valid blog can be added ', async () => {
     )
   })
 
+test('if no value is given to likes field it is set to 0', async () => {
+    const newBlog = {
+        title: "title3",
+        author: "author3",
+        url: "url3.com",
+        likes: ""
+    }
+  
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  
+    const response = await api.get('/api/blogs')
+  
+    const likes = response.body.map(r => r.likes)
+    const blogIndex = Number(initialBlogs.length) // length = index of new blog as index starts from 0
+
+    expect(likes[blogIndex]).toEqual(0)
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
