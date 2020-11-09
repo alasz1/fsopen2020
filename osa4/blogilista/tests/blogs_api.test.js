@@ -150,6 +150,38 @@ describe('when there is initially one user at db', () => {
         const body = response.body 
         console.log("All users: ", body)
       })
+      test('get error message if username is non-unique', async () => {
+        
+        const newUser = {
+          username: 'root',
+          name: 'John Smith',
+          password: 'verysecret',
+        }
+
+        await api
+          .post('/api/users')
+          .send(newUser)
+          .expect(400)
+          .expect('Content-Type', /application\/json/)
+
+      })
+
+      test('get error message if username or password is shorter than 3 characters', async () => {
+
+        const newUser = {
+          username: 'j',
+          name: 'John Smith',
+          password: 'verysecret',
+        }
+
+        await api
+          .post('/api/users')
+          .send(newUser)
+          .expect(400)
+          .expect('Content-Type', /application\/json/)
+      })
+
+
     })
 
 afterAll(() => {
