@@ -5,6 +5,9 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newTitle, setNewTitle] = useState('')
+  const [newUrl, setNewUrl] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -58,6 +61,34 @@ const handleLogout = async (event) => {
   console.log('logged out')
 }
 
+const handleTitleChange = (event) => {
+  setNewTitle(event.target.value)
+}
+const handleAuthorChange = (event) => {
+  setNewAuthor(event.target.value)
+}
+const handleUrlChange = (event) => {
+  setNewUrl(event.target.value)
+}
+
+const addBlog = (event) => {
+  event.preventDefault()
+  const blogObject = {
+    title: newTitle,
+    author: newAuthor,
+    url: newUrl,
+  }
+
+  blogService
+    .create(blogObject)
+    .then(returnedBlog => {
+      setBlogs(blogs.concat(returnedBlog))
+      setNewTitle('')
+      setNewAuthor('')
+      setNewUrl('')
+    })
+}
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
@@ -82,15 +113,26 @@ const handleLogout = async (event) => {
     </form>
   )
 
-  // const noteForm = () => (
-  //   <form onSubmit={addNote}>
-  //     <input
-  //       value={newNote}
-  //       onChange={handleNoteChange}
-  //     />
-  //     <button type="submit">save</button>
-  //   </form>  
-  // )
+  const blogForm = () => (
+    <form onSubmit={addBlog}>
+      Title:
+      <input
+        value={newTitle}
+        onChange={handleTitleChange}
+      />
+      Author:
+      <input
+        value={newAuthor}
+        onChange={handleAuthorChange}
+      />
+      Url:
+      <input
+        value={newUrl}
+        onChange={handleUrlChange}
+      />
+      <button type="submit">save</button>
+    </form>  
+  )
 
   return (
     <div>
@@ -101,7 +143,7 @@ const handleLogout = async (event) => {
         <div>
           <p style={{display: "inline-block"}}>{user.name} logged in{'\u00A0'}</p>
           <button onClick={handleLogout}>logout</button>
-          {/* {noteForm()} */}
+          {blogForm()}
           {blogs.map(blog =>
             <Blog key={blog.id} blog={blog} />
           )}
