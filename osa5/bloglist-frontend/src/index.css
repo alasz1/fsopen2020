@@ -1,0 +1,22 @@
+.notification {
+    display: inline-block;
+    color: rgb(39, 185, 39);
+    background: rgb(210, 255, 208);
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+.error {
+    display: inline-block;
+    color: rgb(185, 39, 39);
+    background: rgb(255, 198, 198);
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
