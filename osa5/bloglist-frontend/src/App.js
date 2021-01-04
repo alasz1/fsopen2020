@@ -133,7 +133,7 @@ const App = () => {
           <p style={{ display: "inline-block" }}>{user.name} logged in{'\u00A0'}</p>
           <button onClick={handleLogout}>logout</button>
           {/* {blogForm()} */}
-          <Togglable buttonLabel='Add new blog'>
+          <Togglable buttonLabel='Add new blog' secondButtonLabel='cancel'>
             <BlogForm
               createBlog={addBlog}
               setMessage={setMessage}
