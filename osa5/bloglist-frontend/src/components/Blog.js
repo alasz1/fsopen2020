@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-const Blog = ({ blog }) => {
+const Blog = ({ blog, updateBlog }) => {
 
   const [visible, setVisible] = useState(false)
 
@@ -34,7 +34,7 @@ const Blog = ({ blog }) => {
           <br />
           {blog.url}
           <br />
-          {blog.likes} <button>like</button>
+          {blog.likes} <button onClick={updateBlog}>like</button>
         </div>
       </div>
     </div>

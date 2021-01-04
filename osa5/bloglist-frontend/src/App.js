@@ -73,6 +73,26 @@ const App = () => {
       })
   }
 
+  const updateBlog = (id) => {
+    const blog = blogs.find(n => n.id === id)
+    const updatedBlog = {...blog, likes: blog.likes + 1}
+    blogService
+    .update(id, updatedBlog)
+    .then(returnedBlog => {
+      setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+    })
+    .catch(error => {
+      setErrMessage(
+        `Blog '${blog.title}' was already removed from server`
+      )
+      setTimeout(() => {
+        setErrMessage(null)
+      }, 5000)   
+    })
+}
+  
+
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
@@ -139,9 +159,9 @@ const App = () => {
               setMessage={setMessage}
             />
           </Togglable>
-          <br/>
+          <br />
           {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} updateBlog={() => updateBlog(blog.id)}/>
           )}
         </div>
       }
