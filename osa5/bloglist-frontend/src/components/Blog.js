@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, loggedInUser }) => {
 
   const [visible, setVisible] = useState(false)
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
+
+  const poster = blog.user === undefined ? "Anonymous" : blog.user.name
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -17,11 +19,11 @@ const Blog = ({ blog, updateBlog }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-
+  console.log("BLOG.user ", blog.user, loggedInUser)
   return (
     <div style={blogStyle}>
       <div>
-        {blog.title} {blog.author} 
+        {blog.title} {blog.author}
       </div>
 
       <div >
@@ -35,6 +37,14 @@ const Blog = ({ blog, updateBlog }) => {
           {blog.url}
           <br />
           {blog.likes} <button onClick={updateBlog}>like</button>
+          <br />
+          Posted by {poster}
+          {poster === loggedInUser ?
+            <>
+              <br />
+              <button>delete</button>
+            </>
+            : ""}
         </div>
       </div>
     </div>
