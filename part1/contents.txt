@@ -1,0 +1,46 @@
+React
+
+
+
+App-komponentille tilamääritys:
+	state hook (useState) vs. perinteiset state-käsittelyt
+
+	Funktiota useState (eikä seuraavassa osassa esiteltävää funktiota useEffect) ei saa kutsua 		loopissa, ehtolausekkeiden sisältä tai muista kun komponentin määrittelevästä funktioista.
+
+
+Object spread-syntaksi:
+
+const handleLeftClick = () => {
+  const newClicks = { 
+    ...clicks, 
+    left: clicks.left + 1 
+  }
+  setClicks(newClicks)
+}
+
+= kopioi vanhan objektin uuteen, sitten muutetaan halutut (älä muuta objektia suoraan!)
+
+
+
+Event handling:
+tapahtumankäsittelijä ei saa olla funktiokutsu vaan sen on oltava funktio tai viite funktioon.
+PAITSI: jos kutsutaan Funktiota joka palauttaa funktion
+
+Esim:
+
+const App = (props) => {
+  const [value, setValue] = useState(10)
+
+  const setToValue = (newValue) => () => {	// TÄSSÄ FUNKTIO FUNKTIOSSA
+    setValue(newValue)
+  }
+
+  return (
+    <div>
+      {value}
+      <button onClick={setToValue(1000)}>thousand</button> 	//FUNKTIOKUTSU
+      <button onClick={setToValue(0)}>reset</button>
+      <button onClick={setToValue(value + 1)}>increment</button>
+    </div>
+  )
+}
