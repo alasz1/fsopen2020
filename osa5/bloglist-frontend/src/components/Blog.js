@@ -6,7 +6,7 @@ const Blog = ({ blog, updateBlog, removeBlog, loggedInUser }) => {
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
-  const poster = blog.user === undefined ? "Anonymous" : blog.user.name
+  const poster = blog.user === undefined ? 'Anonymous' : blog.user.name
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -19,7 +19,7 @@ const Blog = ({ blog, updateBlog, removeBlog, loggedInUser }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  console.log("BLOG.user ", blog.user, loggedInUser)
+  console.log('BLOG.user ', blog.user, loggedInUser)
   return (
     <div style={blogStyle}>
       <div>
@@ -44,7 +44,7 @@ const Blog = ({ blog, updateBlog, removeBlog, loggedInUser }) => {
               <br />
               <button onClick={removeBlog}>delete</button>
             </>
-            : ""}
+            : ''}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const Notification = ({ message, errMessage }) => {
   if (message === null && errMessage === null) {
@@ -20,4 +20,4 @@ const Notification = ({ message, errMessage }) => {
   )
 }
 
-export default Notification;
+export default Notification

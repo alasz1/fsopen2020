@@ -114,7 +114,7 @@ const App = () => {
     <form onSubmit={handleLogin}>
       <div>
         username
-          <input
+        <input
           type="text"
           value={username}
           name="Username"
@@ -123,7 +123,7 @@ const App = () => {
       </div>
       <div>
         password
-          <input
+        <input
           type="password"
           value={password}
           name="Password"
@@ -167,7 +167,7 @@ const App = () => {
       {user === null ?
         loginForm() :
         <div>
-          <p style={{ display: "inline-block" }}>{user.name} logged in{'\u00A0'}</p>
+          <p style={{ display: 'inline-block' }}>{user.name} logged in{'\u00A0'}</p>
           <button onClick={handleLogout}>logout</button>
           {/* {blogForm()} */}
           <Togglable buttonLabel='Add new blog' secondButtonLabel='cancel'>
