@@ -21,7 +21,7 @@ const Blog = ({ blog, updateBlog, removeBlog, loggedInUser }) => {
   }
   console.log('BLOG.user ', blog.user, loggedInUser)
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       <div>
         {blog.title} {blog.author}
       </div>
