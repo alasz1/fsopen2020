@@ -75,38 +75,40 @@ const App = () => {
 
   const updateBlog = (id) => {
     const blog = blogs.find(n => n.id === id)
-    const updatedBlog = {...blog, likes: blog.likes + 1}
+    const updatedBlog = { ...blog, likes: blog.likes + 1 }
     blogService
-    .update(id, updatedBlog)
-    .then(returnedBlog => {
-      setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-    })
-    .catch(error => {
-      setErrMessage(
-        `Blog '${blog.title}' was already removed from server`
-      )
-      setTimeout(() => {
-        setErrMessage(null)
-      }, 5000)   
-    })
-}
-  
-const removeBlog = (id) => {
-  const blog = blogs.find(n => n.id === id)
-  blogService
-  .remove(id)
-  .then(() => {
-    setBlogs(blogs.filter(blog => blog.id !== id))
-  })
-  .catch(error => {
-    setErrMessage(
-      `Blog '${blog.title}' was already removed from server`
-    )
-    setTimeout(() => {
-      setErrMessage(null)
-    }, 5000)   
-  })
-}
+      .update(id, updatedBlog)
+      .then(returnedBlog => {
+        setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+      })
+      .catch(error => {
+        setErrMessage(
+          `Blog '${blog.title}' was already removed from server`
+        )
+        setTimeout(() => {
+          setErrMessage(null)
+        }, 5000)
+      })
+  }
+
+  const removeBlog = (id) => {
+    const blog = blogs.find(n => n.id === id)
+    if (window.confirm(`Delete ${blog.title} by ${blog.author}?`)) {
+      blogService
+        .remove(id)
+        .then(() => {
+          setBlogs(blogs.filter(blog => blog.id !== id))
+        })
+        .catch(error => {
+          setErrMessage(
+            `Blog '${blog.title}' was already removed from server`
+          )
+          setTimeout(() => {
+            setErrMessage(null)
+          }, 5000)
+        })
+    }
+  }
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
@@ -176,10 +178,10 @@ const removeBlog = (id) => {
           </Togglable>
           <br />
           {blogs
-          .sort((a, b) => b.likes - a.likes)
-          .map(blog =>
-            <Blog key={blog.id} blog={blog} updateBlog={() => updateBlog(blog.id)} loggedInUser={user.name}/>
-          )}
+            .sort((a, b) => b.likes - a.likes)
+            .map(blog =>
+              <Blog key={blog.id} blog={blog} updateBlog={() => updateBlog(blog.id)} removeBlog={() => removeBlog(blog.id)} loggedInUser={user.name} />
+            )}
         </div>
       }
 
