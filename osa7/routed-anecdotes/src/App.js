@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link, useParams } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, useParams, useHistory } from 'react-router-dom'
 
 const Menu = () => {
   const padding = {
@@ -70,7 +70,7 @@ const CreateNew = (props) => {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
-
+  const history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -80,6 +80,11 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+    props.setNotification(`Added new anecdote: ${content}`)
+    setTimeout(() => {
+      props.setNotification(null)
+    }, 10000)
+    history.push('/')
   }
 
   return (
@@ -103,6 +108,17 @@ const CreateNew = (props) => {
     </div>
   )
 
+}
+
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  return (
+        <div>
+          {message}
+        </div>
+  )
 }
 
 const App = () => {
@@ -148,6 +164,7 @@ const App = () => {
     <div>
 
       <h1>Software anecdotes</h1>
+      <Notification message={notification} />
 
       <Router>
         <Menu />
@@ -156,7 +173,7 @@ const App = () => {
             <Anecdote anecdotes={anecdotes} />
           </Route>
           <Route path="/create">
-            <CreateNew addNew={addNew} />
+            <CreateNew addNew={addNew} notification={notification} setNotification={setNotification}/>
           </Route>
           <Route path="/about">
             <About />
