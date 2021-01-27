@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, useParams, useHistory } from 'react-router-dom'
+import { useField } from './hooks'
 
 const Menu = () => {
   const padding = {
@@ -16,7 +17,9 @@ const Menu = () => {
   )
 }
 
-const AnecdoteList = ({ anecdotes }) => (
+const AnecdoteList = ({ anecdotes }) => {
+  console.log("anecdotes: ", anecdotes)
+  return (
   <div>
     <h2>Anecdotes</h2>
     <ul>
@@ -27,7 +30,7 @@ const AnecdoteList = ({ anecdotes }) => (
     </ul>
   </div>
 )
-
+      }
 const Anecdote = ({ anecdotes }) => {
   const id = useParams().id
   console.log("anecdotes ", anecdotes)
@@ -67,17 +70,25 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  // const [content, setContent] = useState('')
+  // const [author, setAuthor] = useState('')
+  // const [info, setInfo] = useState('')
+
+// made form to use useField custom hook
+
+  const content = useField('text')
+  const author = useField('text')
+  const info = useField('text')
+
+
   const history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0
     })
     props.setNotification(`Added new anecdote: ${content}`)
@@ -87,21 +98,25 @@ const CreateNew = (props) => {
     history.push('/')
   }
 
+
   return (
     <div>
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          {/* <input name='content' value={content} onChange={(e) => setContent(e.target.value)} /> */}
+          <input {...content} />
         </div>
         <div>
           author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          {/* <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} /> */}
+          <input {...author} />
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e) => setInfo(e.target.value)} />
+          {/* <input name='info' value={info} onChange={(e) => setInfo(e.target.value)} /> */}
+          <input {...info} />
         </div>
         <button>create</button>
       </form>
@@ -159,6 +174,8 @@ const App = () => {
 
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
+
+
 
   return (
     <div>
