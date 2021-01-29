@@ -91,13 +91,20 @@ const CreateNew = (props) => {
       info: info.value,
       votes: 0
     })
-    props.setNotification(`Added new anecdote: ${content}`)
+    props.setNotification(`Added new anecdote: ${content.value}`)
     setTimeout(() => {
       props.setNotification(null)
     }, 10000)
     history.push('/')
   }
 
+  const clearFields = (e) => {
+    e.preventDefault()
+    console.log('clear fields')
+    content.onClear()
+    author.onClear()
+    info.onClear()
+  }
 
   return (
     <div>
@@ -106,7 +113,7 @@ const CreateNew = (props) => {
         <div>
           content
           {/* <input name='content' value={content} onChange={(e) => setContent(e.target.value)} /> */}
-          <input {...content} />
+          <input {...content} className='contentInput' />
         </div>
         <div>
           author
@@ -119,10 +126,11 @@ const CreateNew = (props) => {
           <input {...info} />
         </div>
         <button>create</button>
+        <button onClick={clearFields}>reset</button>
       </form>
+    
     </div>
   )
-
 }
 
 const Notification = ({ message }) => {
@@ -130,7 +138,7 @@ const Notification = ({ message }) => {
     return null
   }
   return (
-        <div>
+        <div style={{color: "red"}}>
           {message}
         </div>
   )
@@ -181,7 +189,7 @@ const App = () => {
     <div>
 
       <h1>Software anecdotes</h1>
-      <Notification message={notification} />
+      <Notification message={notification}/>
 
       <Router>
         <Menu />
